@@ -7,7 +7,7 @@ export default class AnimalList extends Component {
                                 {
                                         this.props.animals.map(animals =>
                                                 <div key={animals.id}>
-                                                        <h3>{animals.name}</h3>
+                                                        {animals.name}
                                                 </div>
                                         )
                                 }
