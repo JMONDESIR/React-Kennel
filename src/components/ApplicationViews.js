@@ -7,40 +7,30 @@ import OwnersList from './owner/OwnersList'
 
 
 class ApplicationViews extends Component {
-    employeesFromAPI = [
-        { id: 1, name: "Jessica Younker", dob: "Feb 17, 1985" },
-        { id: 2, name: "Joel Mondesir", dob: "Jan 5, 1980" },
-        { id: 3, name: "Jordan Nelson", dob: "Dec 3, 1983" },
-        { id: 4, name: "Zoe LeBlanc", dob: "Sep 10, 1987" },
-        { id: 5, name: "Blaise Roberts", dob: "Dec 18, 1979" },
-        { id: 6, name: "Amanda Lopez", dob: "Jun 9, 1981" }
-    ]
 
-    locationsFromAPI = [
-        { id: 1, name: "Nashville North", address: "500 Circle Way" },
-        { id: 2, name: "Nashville South", address: "10101 Binary Court" }
-    ]
-
-    animalsFromAPI = [
-        { id: 1, name: "Burger" },
-        { id: 2, name: "Baby" },
-        { id: 3, name: "Bouncer" },
-        { id: 4, name: "Bigtime" },
-        { id: 5, name: "Bankjob" },
-        { id: 6, name: "Babyface" }
-    ]
-
-    ownersFromAPI = [
-        { id: 1, name: "Fenton Crackshell" },
-        { id: 2, name: "Donald Duck" },
-        { id: 3, name: "Scrooge McDuck" },
-        { id: 4, name: "Magica De Spell" }
-    ]
     state = {
-        employees: this.employeesFromAPI,
-        locations: this.locationsFromAPI,
-        animals: this.animalsFromAPI,
-        owners: this.ownersFromAPI
+        locations: [],
+        animals: [],
+        employees: [],
+        owners: []
+    }
+
+    componentDidMount() {
+        const newState = {}
+
+        fetch("http://localhost:5002/animals")
+            .then(r => r.json())
+            .then(animals => newState.animals = animals)
+            .then(() => fetch("http://localhost:5002/employees")
+            .then(r => r.json()))
+            .then(employees => newState.employees = employees)
+            .then(() => fetch("http://localhost:5002/locations")
+            .then(r => r.json()))
+            .then(locations => newState.locations = locations)
+            .then(() => fetch("http://localhost:5002/owners")
+            .then(r => r.json()))
+            .then(owners => newState.owners = owners)
+            .then(() => this.setState(newState))
     }
 
     render() {
